@@ -1,0 +1,19 @@
+name: Create tag
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create tag
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git tag -a "v${{ github.run_number }}" -m "Tag created by GitHub Actions"
+          git push origin "v${{ github.run_number }}"
